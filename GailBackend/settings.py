@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'GailBackend.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.parse(os.environ.get('DATABASE_URL'), conn_max_age=600),
+    'default': dj_database_url.parse(os.environ.get('postgres://gaildb_user:FM7jv3hw6RrGY7yprBC88Wk2XUDTOGT3@dpg-cgdorfceoogo8r46bg00-a.oregon-postgres.render.com/gaildb'), conn_max_age=600),
 }
 
 
