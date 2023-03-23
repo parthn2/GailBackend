@@ -1,4 +1,1 @@
-PYTHON_VERSION = 3.9.9
-SECRET_KEY = 432
-DEBUG = 1
 DATABASE_URL = 'postgres://gaildb_user:FM7jv3hw6RrGY7yprBC88Wk2XUDTOGT3@dpg-cgdorfceoogo8r46bg00-a/gaildb'
