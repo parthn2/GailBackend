@@ -16,8 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from Gail_Backend import views
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('motors/', views.MotorList.as_view()),
     path('motors/<int:motor_id>', views.MotorDetail.as_view()) 
 ]
+
+urlpatterns += staticfiles_urlpatterns()
