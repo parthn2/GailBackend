@@ -10,23 +10,32 @@ from rest_framework import status
 # Create your views here.
 class MotorList(APIView):
     def get(self, request):
-        items = Motor.objects.all()
-        serializer = MotorSerializer(items, many=True)
-        return Response(serializer.data)
+        try:
+            items = Motor.objects.all()
+            serializer = MotorSerializer(items, many=True)
+            return Response(serializer.data)
+        except:
+            Response("Error")
 
     def post(self, request):
         motor = Motor.objects.filter(motor_id=request.data['motor_id'])
-        if not motor:
-            Motor.objects.create(motor_id = request.data['motor_id']).save()
-            motor = Motor.objects.filter(motor_id=request.data['motor_id'])
-        Current.objects.create(value=request.data['current'], motor=motor[0]).save()
-        Voltage.objects.create(value=request.data['voltage'], motor=motor[0]).save()
-        return Response('done')
+        try:
+            if not motor:
+                Motor.objects.create(motor_id = request.data['motor_id']).save()
+                motor = Motor.objects.filter(motor_id=request.data['motor_id'])
+            Current.objects.create(value=request.data['current'], motor=motor[0]).save()
+            Voltage.objects.create(value=request.data['voltage'], motor=motor[0]).save()
+            return Response('done')
+        except:
+            Response("Error")
 
 
 class MotorDetail(APIView):
     def get(self, request, motor_id):
-        motor = Motor.objects.filter(motor_id=motor_id)
-        current = list(Current.objects.filter(motor=motor[0]).values_list('value', flat=True))
-        voltage = list(Voltage.objects.filter(motor=motor[0]).values_list('value', flat=True))
-        return Response({'current': current, 'voltage': voltage})
+        try:
+            motor = Motor.objects.filter(motor_id=motor_id)
+            current = list(Current.objects.filter(motor=motor[0]).values_list('value', flat=True))
+            voltage = list(Voltage.objects.filter(motor=motor[0]).values_list('value', flat=True))
+            return Response({'current': current, 'voltage': voltage})
+        except:
+            Response("Error")
