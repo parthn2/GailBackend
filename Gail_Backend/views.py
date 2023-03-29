@@ -16,14 +16,11 @@ class MotorList(APIView):
 
     def post(self, request):
         motor = Motor.objects.filter(motor_id=request.data['motor_id'])
-        if motor:
-            print(1)
-            Current.objects.create(value=request.data['current'], motor=motor[0]).save()
-            Voltage.objects.create(value=request.data['voltage'], motor=motor[0]).save()
-        else:
-            motor = Motor.objects.create(motor_id = request.data['motor_id']).save()
-            Current.objects.create(value=request.data['current'], motor=motor[0]).save()
-            Voltage.objects.create(value=request.data['voltage'], motor=motor[0]).save()
+        if not motor:
+            Motor.objects.create(motor_id = request.data['motor_id']).save()
+            motor = Motor.objects.filter(motor_id=request.data['motor_id'])
+        Current.objects.create(value=request.data['current'], motor=motor[0]).save()
+        Voltage.objects.create(value=request.data['voltage'], motor=motor[0]).save()
         return Response('done')
 
 
